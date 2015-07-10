@@ -1,6 +1,6 @@
 'use strict'
 
-var server {
+var server = {
     default: { 
       port: 8923 
     },
