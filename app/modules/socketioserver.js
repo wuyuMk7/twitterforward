@@ -3,7 +3,7 @@
 var http = require('http');
 var socketio = require('socket.io');
 
-module.exports.run = function(app) {
+module.exports.run = function(app, config) {
     http = http.Server(app.callback());
     var io = socketio(http);
 
