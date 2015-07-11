@@ -7,9 +7,9 @@ twitter.list = function *(next) {
         id: 1,
         text: '2333',
     }
-    this.render('twitter/list', data);
+    yield this.render('twitter/list', data);
 
-    yield *next;
+    //yield *next;
 }
 
 module.exports = twitter;

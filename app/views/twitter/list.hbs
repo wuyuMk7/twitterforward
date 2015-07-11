@@ -1,0 +1,46 @@
+<div>
+    <div id="tweets"></div>
+</div>
+<script type="text/jsx">
+    var tweets = [
+        { id: '1', text: '233' },
+        { id: '2', text: '345' },
+    ]; 
+    
+    var Tweet = React.createClass({
+        render: function () {
+            return (
+                <ul>         
+                    <li> { this.props.id } </li>
+                    <li> { this.props.children }</li>
+                </ul>
+            ); 
+        }                              
+    });
+    
+    var TweetList = React.createClass({
+        getInitialState: function () {
+            return {};
+        },
+        render: function () {
+            var tweets = this.props.data.map(function(tweet) {
+                return (
+                    <Tweet id={tweet.id}>         
+                        { tweet.text }
+                    </Tweet>
+                );                                 
+            });
+            return (
+                <div>
+                    { tweets }
+                </div>
+            ); 
+        }
+    });
+    
+    React.render(
+        <TweetList data={tweets} />, 
+        document.getElementById('tweets')
+    );
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.js"></script>

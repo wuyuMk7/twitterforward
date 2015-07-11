@@ -13,8 +13,8 @@ var koaHandlebars = require('koa-handlebars');
 var sys = require('./config/init');
 var router = require('./config/router')(modules); 
 
-app.use(router.routes());
 app.use(koaHandlebars(sys.config.handlebars));
+app.use(router.routes());
 app.use(koaStatic('public', {defer: false}));
 
 var socketio = require('./modules/socketioserver');

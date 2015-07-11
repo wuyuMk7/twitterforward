@@ -7,8 +7,9 @@ module.exports.run = function(app) {
     http = http.Server(app.callback());
     var io = socketio(http);
 
-    io.on('connection', function() {
-       console.log('co');    
+    io.on('connection', function(socket) {
+        console.log('connection from: ', socket.request.connection._peername);    
+        socket.emit('twitter', 'test');
     });
 
     return http;
