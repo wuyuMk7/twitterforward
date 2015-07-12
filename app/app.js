@@ -18,6 +18,6 @@ app.use(router.routes());
 app.use(koaStatic('public', {defer: false}));
 
 var socketio = require('./modules/socketioserver');
-var server = socketio.run(app, sys.config);
+var server = socketio.run(app, { config: sys.config, api: sys.api });
 
 module.exports = server;
