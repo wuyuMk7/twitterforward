@@ -20,4 +20,8 @@ app.use(koaStatic('public', {defer: false}));
 var socketio = require('./modules/socketioserver');
 var server = socketio.run(app, { config: sys.config, api: sys.api });
 
-module.exports = server;
+var port = sys.config.server[app.env].port;
+if (!port) port = sys.config.server.default.port;
+
+module.exports.run = server;
+module.exports.port = port;
