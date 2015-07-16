@@ -13,6 +13,7 @@ var koaHandlebars = require('koa-handlebars');
 var sys = require('./config/init');
 var router = require('./config/router')(modules); 
 
+app.use(sys.init(app));
 app.use(koaHandlebars(sys.config.handlebars));
 app.use(router.routes());
 app.use(koaStatic('public', {defer: false}));
