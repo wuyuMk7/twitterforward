@@ -36,7 +36,10 @@ module.exports.run = function(app, sys) {
         redisClient.select(3);
 
         io.of('/twitterForward').on('connection', function(socket) {
-            console.log('connection from: ', socket.request.connection._peername);    
+            //console.log('connection from: ', socket.request.connection._peername);    
+            var address = socket.request.headers['x-forwarded-for'] || '';
+            address = address + ' peer_' + JSON.stringify(socket.request.connection._peername);
+            console.log('connection from: ', address);
             //socket.emit('twitter', 'test');
         });
         

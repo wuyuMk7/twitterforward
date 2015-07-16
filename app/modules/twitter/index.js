@@ -13,7 +13,8 @@ twitter.list = function *(next) {
     //console.log(Object.prototype.toString.call(tweets));
 
     var data = {
-        tweets: JSON.stringify(tweets.map(function (v) { return JSON.parse(v); }))
+        title: 'Tweets!',
+        tweets: JSON.stringify(tweets.map(function (v) { return JSON.parse(v); })),
     }
     yield this.render('twitter/list', data);
 
