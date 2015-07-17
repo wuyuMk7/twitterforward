@@ -4,23 +4,23 @@
 //]; 
 
 $(function () {
-    // Default socketio server:
-    // var socket = io.connect('/twitterForward');
-    // Because I use cloudflare, so I need set a subdomain for ws.
-    var socket = io.connect('socket.' + window.location.hostname + '/twitterForward');
-    socket.on('twitter', function(msg) {
-        console.log('new:', msg);
-    });
-
     var Tweet = React.createClass({
         render: function () {
             return (
-                <ul>         
-                    <li> { this.props.user.name } </li>
-                    <li> { this.props.user.profile_image_url } </li>
-                    <li> { this.props.time } </li>
-                    <li> { this.props.children }</li>
-                </ul>
+                <div className="comment">
+                    <a className="avatar">
+                        <img src={ this.props.user.profile_image_url } />
+                    </a>
+                    <div className="content">
+                        <a className="author"> { this.props.user.name }</a>
+                        <div className="metadata">
+                            <div className="date">{ this.props.time }</div>
+                        </div>
+                        <div className="text">
+                            { this.props.children }
+                        </div>
+                    </div>
+                </div>
             ); 
         }                              
     });
@@ -28,11 +28,29 @@ $(function () {
     var TweetList = React.createClass({
         getInitialState: function () {
             return {
-                newTweet: '',
+                tweets: this.props.data,
+                count: this.props.data.length,
             };
         },
+        componentDidMount: function () {
+            // Default socketio server:
+            // var socket = io.connect('/twitterForward');
+            // Because I use cloudflare, so I need set a subdomain for ws.
+            var socket = io.connect('socket.' + window.location.hostname + '/twitterForward');
+            var s = this;
+            socket.on('twitter', function(tweet) {
+                var newTweets = s.state.tweets;
+                newTweets.unshift(tweet);
+                s.setState({
+                    //tweets: this.state.tweets.unshift(tweet),
+                    //data: this.state.data + 1
+                    tweets: newTweets,
+                    count: s.state.count + 1
+                })
+            });
+        },
         render: function () {
-            var tweets = this.props.data.map(function(tweet) {
+            var tweets = this.state.tweets.map(function(tweet) {
                 return (
                     <Tweet id={tweet.id} user={tweet.user} time={tweet.created_at}>         
                         { tweet.text }
@@ -40,7 +58,7 @@ $(function () {
                 );                                 
             });
             return (
-                <div>
+                <div className="ui comments">
                     { tweets }
                 </div>
             ); 

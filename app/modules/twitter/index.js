@@ -8,7 +8,7 @@ var redisClient = redis.createClient();
 twitter.list = function *(next) {
     this.redis.select(3);
 
-    var tweets = yield this.redis.zrange(['twitter:forward:twitter:all', 0, -1]);
+    var tweets = yield this.redis.zrevrange(['twitter:forward:twitter:all', 0, -1]);
     //console.log(tweets);
     //console.log(Object.prototype.toString.call(tweets));
 

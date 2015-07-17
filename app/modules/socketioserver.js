@@ -30,8 +30,8 @@ module.exports.run = function(app, sys) {
     /* Twitter stream */
     function getTweet() {
         var track = '';
-        //var follow = ['294025417'];
-        var follow = ['1962350898'];
+        var follow = ['294025417'];
+        //var follow = ['1962350898'];
         var stream = sys.api.twitter.stream('statuses/filter', { track: track, follow: follow });
         redisClient.select(3);
 
